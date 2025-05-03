@@ -7,7 +7,7 @@ GamifyEd is a modern, interactive educational platform that transforms learning 
 Fullstack
 
 ## Deployed App
-Frontend: [Deployment URL will be added here]
+Frontend: [\[Educational-Gamification-App\]](https://educational-gamification07-app.vercel.app/)
 
 ## Directory Structure
 ```
@@ -36,6 +36,13 @@ my-react-app/
 - **Responsive Design**: Optimized for all device sizes
 - **Modern UI**: Clean and intuitive user interface
 
+## Screenshots
+![Home Page](./src/screenshots/homepage1.png)
+![About](./src/screenshots//quiz_page.png)
+![Learning Module](./src/screenshots//quiz_page.png)
+![Progress Tracking](./src/screenshots/progress_dashboard.png)
+![Features](./src/screenshots//homepage_section_2.png)
+
 ## Design Decisions & Assumptions
 - **Component-Based Architecture**: Using React for modular and maintainable code
 - **Context API**: For state management across components
@@ -48,7 +55,7 @@ my-react-app/
 ## Installation & Getting Started
 1. Clone the repository:
 ```bash
-git clone [repository-url]
+git clone https://github.com/shatakshisachan051/Education_app
 cd my-react-app
 ```
 
@@ -139,5 +146,4 @@ The application uses Firebase services for backend operations:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+
