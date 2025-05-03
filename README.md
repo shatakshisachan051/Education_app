@@ -36,12 +36,6 @@ my-react-app/
 - **Responsive Design**: Optimized for all device sizes
 - **Modern UI**: Clean and intuitive user interface
 
-## Screenshots
-![Home Page](./src/screenshots/homepage1.png)
-![About](./src/screenshots/aboutPage.png)
-![Learning Module](./src/screenshots/quiz_page.png)
-![Progress Tracking](./src/screenshots/progress_dashboard.png)
-![Features](./src/screenshots//homepage_section_2.png)
 
 ## Design Decisions & Assumptions
 - **Component-Based Architecture**: Using React for modular and maintainable code
