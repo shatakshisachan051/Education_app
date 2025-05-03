@@ -38,8 +38,8 @@ my-react-app/
 
 ## Screenshots
 ![Home Page](./src/screenshots/homepage1.png)
-![About](./src/screenshots//quiz_page.png)
-![Learning Module](./src/screenshots//quiz_page.png)
+![About](./src/screenshots/aboutPage.png)
+![Learning Module](./src/screenshots/quiz_page.png)
 ![Progress Tracking](./src/screenshots/progress_dashboard.png)
 ![Features](./src/screenshots//homepage_section_2.png)
 
