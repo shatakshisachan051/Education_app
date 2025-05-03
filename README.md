@@ -25,7 +25,7 @@ my-react-app/
 ```
 
 ## Video Walkthrough
-[Video walkthrough will be added here]
+[\[Video walkthrough\]](https://drive.google.com/file/d/1AXEvcUCWTXdt3rrx-F64bVCInqwcnvk6/view?usp=sharing)
 
 ## Features
 - **User Authentication**: Secure login and signup functionality
@@ -35,6 +35,13 @@ my-react-app/
 - **Leaderboards**: Compete with other learners
 - **Responsive Design**: Optimized for all device sizes
 - **Modern UI**: Clean and intuitive user interface
+
+## Screenshots
+![Home Page](./src/screenshots/homepage1.png)
+![About](./src/screenshots/aboutPage.png)
+![Learning Module](./src/screenshots/quiz_page.png)
+![Progress Tracking](./src/screenshots/progress_dashboard.png)
+![Features](./src/screenshots//homepage_section_2.png)
 
 ## Design Decisions & Assumptions
 - **Component-Based Architecture**: Using React for modular and maintainable code
@@ -138,5 +145,8 @@ The application uses Firebase services for backend operations:
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+
+
 
 
