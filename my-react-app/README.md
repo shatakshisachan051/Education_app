@@ -25,7 +25,7 @@ my-react-app/
 ```
 
 ## Video Walkthrough
-[Video walkthrough will be added here]
+[\[Video walkthrough\]](https://drive.google.com/file/d/1AXEvcUCWTXdt3rrx-F64bVCInqwcnvk6/view?usp=sharing)
 
 ## Features
 - **User Authentication**: Secure login and signup functionality
