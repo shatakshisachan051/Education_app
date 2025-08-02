@@ -11,7 +11,6 @@ import { Leaderboard } from './pages/Leaderboard';
 import { Quiz } from './pages/Quiz';
 import { QuizCategories } from './pages/QuizCategories';
 import { Scores } from './pages/Scores';
-import { Rewards } from './pages/Rewards';
 import { ProgressDashboard } from './pages/ProgressDashboard';
 import { PrivateRoute } from './components/PrivateRoute';
 
