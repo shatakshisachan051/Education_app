@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const teamMembers = [
   {
@@ -29,6 +30,18 @@ const features = [
 
 export function About() {
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   return (
     <div style={{
@@ -47,15 +60,18 @@ export function About() {
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '0.75rem 2rem',
+          padding: isMobile ? '0.75rem 1rem' : '0.75rem 2rem',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          flexDirection: isMobile ? 'column' : 'row',
+          gap: isMobile ? '1rem' : '0'
         }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '2rem'
+            gap: isMobile ? '1rem' : '2rem',
+            flexDirection: isMobile ? 'column' : 'row'
           }}>
             <div style={{
               display: 'flex',
@@ -66,13 +82,13 @@ export function About() {
                 src="https://www.clipartmax.com/png/small/176-1761370_clinical-educators-education-flat-icon-png.png" 
                 alt="Education Icon"
                 style={{
-                  width: '32px',
-                  height: '32px',
+                  width: isMobile ? '28px' : '32px',
+                  height: isMobile ? '28px' : '32px',
                   objectFit: 'contain'
                 }}
               />
               <span style={{
-                fontSize: '1.25rem',
+                fontSize: isMobile ? '1.125rem' : '1.25rem',
                 fontWeight: 'bold',
                 color: '#1e293b'
               }}>
@@ -81,13 +97,14 @@ export function About() {
             </div>
             <div style={{
               display: 'flex',
-              gap: '1.5rem'
+              gap: isMobile ? '1rem' : '1.5rem',
+              flexDirection: isMobile ? 'row' : 'row'
             }}>
               <Link to="/" style={{
                 color: '#1e293b',
                 textDecoration: 'none',
                 fontWeight: '500',
-                fontSize: '1rem'
+                fontSize: isMobile ? '0.875rem' : '1rem'
               }}>
                 Home
               </Link>
@@ -95,7 +112,7 @@ export function About() {
                 color: '#1e293b',
                 textDecoration: 'none',
                 fontWeight: '500',
-                fontSize: '1rem'
+                fontSize: isMobile ? '0.875rem' : '1rem'
               }}>
                 About
               </Link>
@@ -103,7 +120,7 @@ export function About() {
                 color: '#1e293b',
                 textDecoration: 'none',
                 fontWeight: '500',
-                fontSize: '1rem'
+                fontSize: isMobile ? '0.875rem' : '1rem'
               }}>
                 Contact
               </Link>
@@ -111,30 +128,30 @@ export function About() {
           </div>
           <div style={{
             display: 'flex',
-            gap: '1rem'
+            gap: isMobile ? '0.75rem' : '1rem'
           }}>
             <Link to="/login" style={{
-              padding: '0.5rem 1.25rem',
+              padding: isMobile ? '0.5rem 1rem' : '0.5rem 1.25rem',
               backgroundColor: 'transparent',
               color: '#1e293b',
               border: '1px solid #1e293b',
               borderRadius: '0.375rem',
               cursor: 'pointer',
               fontWeight: '500',
-              fontSize: '0.875rem',
+              fontSize: isMobile ? '0.75rem' : '0.875rem',
               textDecoration: 'none'
             }}>
               Login
             </Link>
             <Link to="/signup" style={{
-              padding: '0.5rem 1.25rem',
+              padding: isMobile ? '0.5rem 1rem' : '0.5rem 1.25rem',
               backgroundColor: '#1e293b',
               color: 'white',
               border: 'none',
               borderRadius: '0.375rem',
               cursor: 'pointer',
               fontWeight: '500',
-              fontSize: '0.875rem',
+              fontSize: isMobile ? '0.75rem' : '0.875rem',
               textDecoration: 'none'
             }}>
               Sign Up
@@ -148,12 +165,10 @@ export function About() {
       }}>
         {/* Hero Section */}
         <div style={{
-          background: '#f8fafc',
-          padding: '4rem 2rem',
-          textAlign: 'center',
-          '@media (maxWidth: 768px)': {
-            padding: '2rem 1rem'
-          }
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'white',
+          padding: isMobile ? '4rem 1rem' : '6rem 2rem',
+          textAlign: 'center'
         }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -161,161 +176,233 @@ export function About() {
             transition={{ duration: 0.8 }}
           >
             <h1 style={{
-              fontSize: '3rem',
-              color: '#1e293b',
+              fontSize: isMobile ? '2.5rem' : '3.5rem',
               fontWeight: 'bold',
-              marginBottom: '1rem'
+              marginBottom: '1rem',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
             }}>
               About GamifyEd
             </h1>
             <p style={{
-              fontSize: '1.25rem',
-              color: '#475569',
+              fontSize: isMobile ? '1.125rem' : '1.25rem',
               maxWidth: '800px',
-              margin: '0 auto'
+              margin: '0 auto',
+              opacity: 0.9,
+              lineHeight: '1.6'
             }}>
-              Empowering learners worldwide through innovative education technology
+              Transforming education through interactive learning experiences and gamified assessments
             </p>
           </motion.div>
         </div>
 
         {/* Mission Section */}
         <div style={{
-          padding: '6rem 2rem',
-          maxWidth: '1200px',
-          margin: '0 auto',
-          '@media (maxWidth: 768px)': {
-            padding: '3rem 1rem'
-          }
-        }}>
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 style={{
-              fontSize: '2.5rem',
-              color: '#1e293b',
-              fontWeight: 'bold',
-              marginBottom: '1.5rem'
-            }}>
-              Our Mission
-            </h2>
-            <p style={{
-              fontSize: '1.25rem',
-              color: '#475569',
-              lineHeight: '1.8',
-              marginBottom: '2rem'
-            }}>
-              At GamifyEd, we believe in making quality education accessible to everyone. Our platform combines cutting-edge technology with proven learning methodologies to create an engaging and effective learning experience.
-            </p>
-            <div style={{
-              display: 'flex',
-              gap: '1rem'
-            }}>
-              <div style={{
-                padding: '1rem',
-                background: '#f1f5f9',
-                borderRadius: '0.5rem',
-                textAlign: 'center'
-              }}>
-                <div style={{
-                  fontSize: '2rem',
-                  fontWeight: 'bold',
-                  color: '#1e293b'
-                }}>
-                  50K+
-                </div>
-                <div style={{
-                  color: '#64748b'
-                }}>
-                  Active Users
-                </div>
-              </div>
-              <div style={{
-                padding: '1rem',
-                background: '#f1f5f9',
-                borderRadius: '0.5rem',
-                textAlign: 'center'
-              }}>
-                <div style={{
-                  fontSize: '2rem',
-                  fontWeight: 'bold',
-                  color: '#1e293b'
-                }}>
-                  100+
-                </div>
-                <div style={{
-                  color: '#64748b'
-                }}>
-                  Countries
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Team Section */}
-        <div style={{
-          padding: '6rem 2rem',
-          background: '#f8fafc',
-          '@media (maxWidth: 768px)': {
-            padding: '3rem 1rem'
-          }
+          padding: isMobile ? '3rem 1rem' : '6rem 2rem',
+          background: 'white'
         }}>
           <div style={{
             maxWidth: '1200px',
             margin: '0 auto'
           }}>
-            <h2 style={{
-              fontSize: '2.5rem',
-              color: '#1e293b',
-              fontWeight: 'bold',
-              textAlign: 'center',
-              marginBottom: '3rem',
-              '@media (maxWidth: 768px)': {
-                fontSize: '2rem'
-              }
-            }}>
-              Meet Our Team
-            </h2>
             <div style={{
-              display: 'flex',
-              justifyContent: 'center'
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+              gap: isMobile ? '2rem' : '4rem',
+              alignItems: 'center'
+            }}>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <h2 style={{
+                  fontSize: isMobile ? '2rem' : '2.5rem',
+                  color: '#1e293b',
+                  fontWeight: 'bold',
+                  marginBottom: '1.5rem'
+                }}>
+                  Our Mission
+                </h2>
+                <p style={{
+                  fontSize: isMobile ? '1rem' : '1.125rem',
+                  color: '#64748b',
+                  lineHeight: '1.7',
+                  marginBottom: '1.5rem'
+                }}>
+                  We believe that learning should be engaging, accessible, and personalized. 
+                  Our platform combines cutting-edge technology with proven educational 
+                  methodologies to create an experience that motivates and empowers learners.
+                </p>
+                <p style={{
+                  fontSize: isMobile ? '1rem' : '1.125rem',
+                  color: '#64748b',
+                  lineHeight: '1.7'
+                }}>
+                  Through gamification, adaptive learning algorithms, and a supportive 
+                  community, we're making education more effective and enjoyable for 
+                  learners worldwide.
+                </p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                style={{
+                  textAlign: 'center'
+                }}
+              >
+                <div style={{
+                  fontSize: isMobile ? '8rem' : '10rem',
+                  marginBottom: '1rem'
+                }}>
+                  🎓
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+
+        {/* Features Section */}
+        <div style={{
+          padding: isMobile ? '3rem 1rem' : '6rem 2rem',
+          background: '#f8fafc'
+        }}>
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto'
+          }}>
+            <div style={{
+              textAlign: 'center',
+              marginBottom: isMobile ? '3rem' : '4rem'
+            }}>
+              <h2 style={{
+                fontSize: isMobile ? '2rem' : '2.5rem',
+                color: '#1e293b',
+                fontWeight: 'bold',
+                marginBottom: '1rem'
+              }}>
+                What Makes Us Different
+              </h2>
+              <p style={{
+                fontSize: isMobile ? '1rem' : '1.125rem',
+                color: '#64748b',
+                maxWidth: '600px',
+                margin: '0 auto'
+              }}>
+                Our innovative approach to education sets us apart
+              </p>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+              gap: isMobile ? '2rem' : '3rem'
+            }}>
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  style={{
+                    background: 'white',
+                    padding: isMobile ? '1.5rem' : '2rem',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                    textAlign: 'center'
+                  }}
+                >
+                  <div style={{
+                    fontSize: isMobile ? '2.5rem' : '3rem',
+                    marginBottom: '1rem'
+                  }}>
+                    {feature.icon}
+                  </div>
+                  <h3 style={{
+                    fontSize: isMobile ? '1.25rem' : '1.5rem',
+                    color: '#1e293b',
+                    fontWeight: 'bold',
+                    marginBottom: '0.75rem'
+                  }}>
+                    {feature.title}
+                  </h3>
+                  <p style={{
+                    color: '#64748b',
+                    lineHeight: '1.6'
+                  }}>
+                    {feature.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Team Section */}
+        <div style={{
+          padding: isMobile ? '3rem 1rem' : '6rem 2rem',
+          background: 'white'
+        }}>
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto'
+          }}>
+            <div style={{
+              textAlign: 'center',
+              marginBottom: isMobile ? '3rem' : '4rem'
+            }}>
+              <h2 style={{
+                fontSize: isMobile ? '2rem' : '2.5rem',
+                color: '#1e293b',
+                fontWeight: 'bold',
+                marginBottom: '1rem'
+              }}>
+                Meet Our Team
+              </h2>
+              <p style={{
+                fontSize: isMobile ? '1rem' : '1.125rem',
+                color: '#64748b',
+                maxWidth: '600px',
+                margin: '0 auto'
+              }}>
+                The passionate individuals behind GamifyEd
+              </p>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: isMobile ? '2rem' : '3rem'
             }}>
               {teamMembers.map((member, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
                   style={{
+                    background: '#f8fafc',
+                    padding: isMobile ? '1.5rem' : '2rem',
+                    borderRadius: '12px',
                     textAlign: 'center',
-                    maxWidth: '400px'
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
                   }}
                 >
-                  <div style={{
-                    width: '250px',
-                    height: '250px',
-                    borderRadius: '50%',
-                    overflow: 'hidden',
-                    margin: '0 auto 1.5rem',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                  }}>
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover'
-                      }}
-                    />
-                  </div>
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    style={{
+                      width: isMobile ? '120px' : '150px',
+                      height: isMobile ? '120px' : '150px',
+                      borderRadius: '50%',
+                      objectFit: 'cover',
+                      margin: '0 auto 1rem',
+                      border: '4px solid white',
+                      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                    }}
+                  />
                   <h3 style={{
-                    fontSize: '1.75rem',
+                    fontSize: isMobile ? '1.25rem' : '1.5rem',
                     color: '#1e293b',
                     fontWeight: 'bold',
                     marginBottom: '0.5rem'
@@ -324,7 +411,7 @@ export function About() {
                   </h3>
                   <p style={{
                     color: '#64748b',
-                    fontSize: '1.25rem'
+                    fontSize: isMobile ? '0.875rem' : '1rem'
                   }}>
                     {member.role}
                   </p>
@@ -333,20 +420,73 @@ export function About() {
             </div>
           </div>
         </div>
+
+        {/* CTA Section */}
+        <div style={{
+          padding: isMobile ? '3rem 1rem' : '6rem 2rem',
+          background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
+          color: 'white',
+          textAlign: 'center'
+        }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 style={{
+              fontSize: isMobile ? '2rem' : '2.5rem',
+              fontWeight: 'bold',
+              marginBottom: '1rem'
+            }}>
+              Ready to Start Learning?
+            </h2>
+            <p style={{
+              fontSize: isMobile ? '1rem' : '1.125rem',
+              marginBottom: '2rem',
+              opacity: 0.9
+            }}>
+              Join thousands of learners who are already transforming their education
+            </p>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/signup')}
+              style={{
+                padding: isMobile ? '0.75rem 2rem' : '1rem 2.5rem',
+                fontSize: isMobile ? '1rem' : '1.125rem',
+                backgroundColor: '#dc2626',
+                color: 'white',
+                border: 'none',
+                borderRadius: '0.5rem',
+                cursor: 'pointer',
+                fontWeight: '600',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)'
+              }}
+            >
+              Get Started Today
+            </motion.button>
+          </motion.div>
+        </div>
       </main>
 
+      {/* Footer */}
       <footer style={{
         background: '#1e293b',
         color: 'white',
-        padding: '2rem',
-        marginTop: 'auto'
+        padding: isMobile ? '2rem 1rem' : '3rem 2rem',
+        textAlign: 'center'
       }}>
         <div style={{
           maxWidth: '1200px',
-          margin: '0 auto',
-          textAlign: 'center'
+          margin: '0 auto'
         }}>
-          © 2025 GamifyEd. All rights reserved.
+          <p style={{
+            margin: 0,
+            opacity: 0.8,
+            fontSize: isMobile ? '0.875rem' : '1rem'
+          }}>
+            © 2024 GamifyEd. All rights reserved.
+          </p>
         </div>
       </footer>
     </div>

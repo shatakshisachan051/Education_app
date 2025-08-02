@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { useAuth } from '../context/AuthContext';
@@ -11,10 +11,22 @@ export function Signup() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
   // Enables user creation and subsequent navigation to dashboard
   const { signup } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   // Implements secure account creation with proper validation and error handling
   const handleSubmit = async (e) => {
@@ -49,19 +61,20 @@ export function Signup() {
       <Navbar />
       {/* Creates a distinct registration area with proper visual hierarchy */}
       <main style={{ 
-        maxWidth: '450px', 
-        margin: '2rem auto', 
-        padding: '3rem 3rem',
+        maxWidth: isMobile ? '100%' : '450px', 
+        margin: isMobile ? '1rem auto' : '2rem auto', 
+        padding: isMobile ? '2rem 1.5rem' : '3rem 3rem',
         background: 'white',
         borderRadius: '12px',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        width: isMobile ? '90%' : 'auto'
       }}>
         {/* Clearly indicates the purpose of the page to new users */}
         <h1 style={{ 
-          marginBottom: '2.5rem', 
+          marginBottom: isMobile ? '2rem' : '2.5rem', 
           textAlign: 'center',
           color: '#1a365d',
-          fontSize: '2rem',
+          fontSize: isMobile ? '1.75rem' : '2rem',
           fontWeight: 'bold'
         }}>Create Account</h1>
         
@@ -74,7 +87,7 @@ export function Signup() {
             borderRadius: '8px',
             marginBottom: '2rem',
             border: '1px solid #fed7d7',
-            fontSize: '0.9rem'
+            fontSize: isMobile ? '0.875rem' : '0.9rem'
           }}>
             {error}
           </div>
@@ -82,12 +95,12 @@ export function Signup() {
 
         {/* Structures the registration process for optimal completion */}
         <form onSubmit={handleSubmit} style={{ 
-          maxWidth: '320px', 
+          maxWidth: isMobile ? '100%' : '320px', 
           margin: '0 auto',
-          padding: '0 1rem'
+          padding: isMobile ? '0' : '0 1rem'
         }}>
           {/* Collects essential user identification information */}
-          <div style={{ marginBottom: '2rem' }}>
+          <div style={{ marginBottom: isMobile ? '1.5rem' : '2rem' }}>
             <label
               htmlFor="email"
               style={{
@@ -95,7 +108,7 @@ export function Signup() {
                 marginBottom: '0.75rem',
                 color: '#4a5568',
                 fontWeight: '500',
-                fontSize: '0.95rem'
+                fontSize: isMobile ? '0.9rem' : '0.95rem'
               }}
             >
               Email Address
@@ -107,23 +120,20 @@ export function Signup() {
               onChange={(e) => setEmail(e.target.value)}
               required
               style={{
-                width: 'auto',
-                padding: '1rem',
+                width: '100%',
+                padding: isMobile ? '0.75rem' : '0.875rem',
                 border: '1px solid #e2e8f0',
-                borderRadius: '8px',
-                fontSize: '1rem',
-                transition: 'border-color 0.2s',
-                ':focus': {
-                  outline: 'none',
-                  borderColor: '#4299e1',
-                  boxShadow: '0 0 0 3px rgba(66, 153, 225, 0.2)'
-                }
+                borderRadius: '6px',
+                fontSize: isMobile ? '0.875rem' : '1rem',
+                transition: 'border-color 0.2s ease',
+                boxSizing: 'border-box'
               }}
+              placeholder="Enter your email"
             />
           </div>
 
-          {/* Ensures secure password creation with proper input masking */}
-          <div style={{ marginBottom: '2rem' }}>
+          {/* Establishes secure password requirements */}
+          <div style={{ marginBottom: isMobile ? '1.5rem' : '2rem' }}>
             <label
               htmlFor="password"
               style={{
@@ -131,7 +141,7 @@ export function Signup() {
                 marginBottom: '0.75rem',
                 color: '#4a5568',
                 fontWeight: '500',
-                fontSize: '0.95rem'
+                fontSize: isMobile ? '0.9rem' : '0.95rem'
               }}
             >
               Password
@@ -143,105 +153,92 @@ export function Signup() {
               onChange={(e) => setPassword(e.target.value)}
               required
               style={{
-                width: 'auto',
-                padding: '1rem',
+                width: '100%',
+                padding: isMobile ? '0.75rem' : '0.875rem',
                 border: '1px solid #e2e8f0',
-                borderRadius: '8px',
-                fontSize: '1rem',
-                transition: 'border-color 0.2s',
-                ':focus': {
-                  outline: 'none',
-                  borderColor: '#4299e1',
-                  boxShadow: '0 0 0 3px rgba(66, 153, 225, 0.2)'
-                }
+                borderRadius: '6px',
+                fontSize: isMobile ? '0.875rem' : '1rem',
+                transition: 'border-color 0.2s ease',
+                boxSizing: 'border-box'
               }}
+              placeholder="Create a password"
             />
           </div>
 
-          {/* Verifies password accuracy to prevent user errors */}
-          <div style={{ marginBottom: '2rem' }}>
+          {/* Confirms password accuracy to prevent user errors */}
+          <div style={{ marginBottom: isMobile ? '1.5rem' : '2rem' }}>
             <label
-              htmlFor="confirm-password"
+              htmlFor="confirmPassword"
               style={{
                 display: 'block',
                 marginBottom: '0.75rem',
                 color: '#4a5568',
                 fontWeight: '500',
-                fontSize: '0.95rem'
+                fontSize: isMobile ? '0.9rem' : '0.95rem'
               }}
             >
               Confirm Password
             </label>
             <input
               type="password"
-              id="confirm-password"
+              id="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               style={{
-                width: 'auto',
-                padding: '1rem',
+                width: '100%',
+                padding: isMobile ? '0.75rem' : '0.875rem',
                 border: '1px solid #e2e8f0',
-                borderRadius: '8px',
-                fontSize: '1rem',
-                transition: 'border-color 0.2s',
-                ':focus': {
-                  outline: 'none',
-                  borderColor: '#4299e1',
-                  boxShadow: '0 0 0 3px rgba(66, 153, 225, 0.2)'
-                }
+                borderRadius: '6px',
+                fontSize: isMobile ? '0.875rem' : '1rem',
+                transition: 'border-color 0.2s ease',
+                boxSizing: 'border-box'
               }}
+              placeholder="Confirm your password"
             />
           </div>
 
-          {/* Initiates the account creation process with clear feedback */}
+          {/* Initiates account creation with proper loading states */}
           <button
             type="submit"
             disabled={loading}
             style={{
               width: '100%',
-              padding: '1rem',
+              padding: isMobile ? '0.875rem' : '1rem',
               backgroundColor: '#3182ce',
               color: 'white',
               border: 'none',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '1rem',
+              borderRadius: '6px',
+              fontSize: isMobile ? '0.9rem' : '1rem',
               fontWeight: '600',
+              cursor: loading ? 'not-allowed' : 'pointer',
               opacity: loading ? 0.7 : 1,
-              transition: 'background-color 0.2s',
-              ':hover': {
-                backgroundColor: '#2c5282'
-              }
+              transition: 'all 0.2s ease',
+              marginBottom: isMobile ? '1.5rem' : '2rem'
             }}
           >
-            {loading ? 'Creating account...' : 'Sign Up'}
+            {loading ? 'Creating Account...' : 'Create Account'}
           </button>
-        </form>
 
-        {/* Offers existing users a quick way to access the login page */}
-        <div style={{ 
-          textAlign: 'center', 
-          marginTop: '2rem',
-          color: '#4a5568'
-        }}>
-          <p>
+          {/* Provides navigation to login for existing users */}
+          <div style={{
+            textAlign: 'center',
+            fontSize: isMobile ? '0.875rem' : '0.9rem',
+            color: '#64748b'
+          }}>
             Already have an account?{' '}
             <Link
               to="/login"
               style={{
                 color: '#3182ce',
                 textDecoration: 'none',
-                fontWeight: '600',
-                ':hover': {
-                  textDecoration: 'underline'
-                }
+                fontWeight: '500'
               }}
             >
-              Login
+              Sign in here
             </Link>
-          </p>
-        </div>
+          </div>
+        </form>
       </main>
     </div>
   );

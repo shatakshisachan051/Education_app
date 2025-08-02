@@ -33,6 +33,18 @@ export function ProgressDashboard() {
   const [scores, setScores] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   useEffect(() => {
     const fetchScores = async () => {
@@ -67,7 +79,12 @@ export function ProgressDashboard() {
         alignItems: 'center', 
         height: '100vh' 
       }}>
-        <div style={{ fontSize: '1.5rem', color: '#4a5568' }}>
+        <div style={{ 
+          fontSize: isMobile ? '1.25rem' : '1.5rem', 
+          color: '#4a5568',
+          textAlign: 'center',
+          padding: isMobile ? '1rem' : '2rem'
+        }}>
           Loading progress data...
         </div>
       </div>
@@ -82,7 +99,12 @@ export function ProgressDashboard() {
         alignItems: 'center', 
         height: '100vh' 
       }}>
-        <div style={{ fontSize: '1.5rem', color: '#e53e3e' }}>
+        <div style={{ 
+          fontSize: isMobile ? '1.25rem' : '1.5rem', 
+          color: '#e53e3e',
+          textAlign: 'center',
+          padding: isMobile ? '1rem' : '2rem'
+        }}>
           {error}
         </div>
       </div>
@@ -148,11 +170,37 @@ export function ProgressDashboard() {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
+        position: isMobile ? 'bottom' : 'top',
+        labels: {
+          boxWidth: isMobile ? 12 : 20,
+          padding: isMobile ? 8 : 15,
+          font: {
+            size: isMobile ? 10 : 12
+          }
+        }
       },
       title: {
         display: true,
-        text: 'Your Learning Progress'
+        text: 'Your Learning Progress',
+        font: {
+          size: isMobile ? 14 : 16
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          font: {
+            size: isMobile ? 10 : 12
+          }
+        }
+      },
+      y: {
+        ticks: {
+          font: {
+            size: isMobile ? 10 : 12
+          }
+        }
       }
     }
   };
@@ -161,12 +209,14 @@ export function ProgressDashboard() {
     <div style={{ 
       maxWidth: '1200px', 
       margin: '0 auto', 
-      padding: '2rem' 
+      padding: isMobile ? '1rem' : '2rem',
+      overflow: 'hidden'
     }}>
       <h1 style={{ 
-        fontSize: '2rem', 
+        fontSize: isMobile ? '1.75rem' : '2rem', 
         color: '#2d3748',
-        marginBottom: '2rem'
+        marginBottom: isMobile ? '1.5rem' : '2rem',
+        textAlign: 'center'
       }}>
         Progress Dashboard
       </h1>
@@ -174,20 +224,22 @@ export function ProgressDashboard() {
       {subjects.length === 0 ? (
         <div style={{ 
           textAlign: 'center', 
-          padding: '2rem',
+          padding: isMobile ? '1.5rem' : '2rem',
           backgroundColor: 'white',
           borderRadius: '0.5rem',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+          margin: '0 auto',
+          maxWidth: isMobile ? '100%' : '600px'
         }}>
           <p style={{ 
-            fontSize: '1.2rem', 
+            fontSize: isMobile ? '1.1rem' : '1.2rem', 
             color: '#4a5568',
             marginBottom: '1rem'
           }}>
             No progress data yet! 🎯
           </p>
           <p style={{ 
-            fontSize: '1.1rem', 
+            fontSize: isMobile ? '1rem' : '1.1rem', 
             color: '#718096'
           }}>
             Take some quizzes to start tracking your progress!
@@ -195,27 +247,29 @@ export function ProgressDashboard() {
         </div>
       ) : (
         <>
+          {/* Stats Cards */}
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-            gap: '2rem',
-            marginBottom: '2rem'
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(250px, 1fr))', 
+            gap: isMobile ? '1rem' : '2rem',
+            marginBottom: isMobile ? '1.5rem' : '2rem'
           }}>
             <div style={{ 
               backgroundColor: 'white', 
-              padding: '1.5rem',
+              padding: isMobile ? '1rem' : '1.5rem',
               borderRadius: '0.5rem',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              textAlign: 'center'
             }}>
               <h2 style={{ 
-                fontSize: '1.5rem', 
+                fontSize: isMobile ? '1.25rem' : '1.5rem', 
                 color: '#2d3748',
-                marginBottom: '1rem'
+                marginBottom: '0.75rem'
               }}>
                 Total Score
               </h2>
               <div style={{ 
-                fontSize: '3rem', 
+                fontSize: isMobile ? '2.5rem' : '3rem', 
                 color: '#4299e1',
                 fontWeight: 'bold'
               }}>
@@ -225,19 +279,20 @@ export function ProgressDashboard() {
 
             <div style={{ 
               backgroundColor: 'white', 
-              padding: '1.5rem',
+              padding: isMobile ? '1rem' : '1.5rem',
               borderRadius: '0.5rem',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              textAlign: 'center'
             }}>
               <h2 style={{ 
-                fontSize: '1.5rem', 
+                fontSize: isMobile ? '1.25rem' : '1.5rem', 
                 color: '#2d3748',
-                marginBottom: '1rem'
+                marginBottom: '0.75rem'
               }}>
                 Subjects Completed
               </h2>
               <div style={{ 
-                fontSize: '3rem', 
+                fontSize: isMobile ? '2.5rem' : '3rem', 
                 color: '#48bb78',
                 fontWeight: 'bold'
               }}>
@@ -246,41 +301,46 @@ export function ProgressDashboard() {
             </div>
           </div>
 
+          {/* Charts Grid */}
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', 
-            gap: '2rem',
-            marginBottom: '2rem'
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(350px, 1fr))', 
+            gap: isMobile ? '1.5rem' : '2rem',
+            marginBottom: isMobile ? '1.5rem' : '2rem'
           }}>
             <div style={{ 
               backgroundColor: 'white', 
-              padding: '1.5rem',
+              padding: isMobile ? '1rem' : '1.5rem',
               borderRadius: '0.5rem',
               boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-              height: '400px'
+              height: isMobile ? '300px' : '400px',
+              overflow: 'hidden'
             }}>
               <Line data={lineChartData} options={chartOptions} />
             </div>
 
             <div style={{ 
               backgroundColor: 'white', 
-              padding: '1.5rem',
+              padding: isMobile ? '1rem' : '1.5rem',
               borderRadius: '0.5rem',
               boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-              height: '400px'
+              height: isMobile ? '300px' : '400px',
+              overflow: 'hidden'
             }}>
               <Bar data={barChartData} options={chartOptions} />
             </div>
           </div>
 
+          {/* Doughnut Chart */}
           <div style={{ 
             backgroundColor: 'white', 
-            padding: '1.5rem',
+            padding: isMobile ? '1rem' : '1.5rem',
             borderRadius: '0.5rem',
             boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-            height: '400px',
-            maxWidth: '600px',
-            margin: '0 auto'
+            height: isMobile ? '300px' : '400px',
+            maxWidth: isMobile ? '100%' : '600px',
+            margin: '0 auto',
+            overflow: 'hidden'
           }}>
             <Doughnut data={doughnutChartData} options={chartOptions} />
           </div>

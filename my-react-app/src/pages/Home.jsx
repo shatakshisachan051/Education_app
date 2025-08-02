@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navbar } from '../components/Navbar';
 
 const heroImage = "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1022&q=80";
@@ -28,7 +28,19 @@ const carouselItems = [
 
 export function Home() {
   const [currentCarousel, setCurrentCarousel] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   const nextCarousel = () => {
     setCurrentCarousel((prev) => (prev + 1) % carouselItems.length);
@@ -59,15 +71,18 @@ export function Home() {
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '0.75rem 2rem',
+          padding: isMobile ? '0.75rem 1rem' : '0.75rem 2rem',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          flexDirection: isMobile ? 'column' : 'row',
+          gap: isMobile ? '1rem' : '0'
         }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '2rem'
+            gap: isMobile ? '1rem' : '2rem',
+            flexDirection: isMobile ? 'column' : 'row'
           }}>
             <div style={{
               display: 'flex',
@@ -78,13 +93,13 @@ export function Home() {
                 src="https://www.clipartmax.com/png/small/176-1761370_clinical-educators-education-flat-icon-png.png" 
                 alt="Education Icon"
                 style={{
-                  width: '32px',
-                  height: '32px',
+                  width: isMobile ? '28px' : '32px',
+                  height: isMobile ? '28px' : '32px',
                   objectFit: 'contain'
                 }}
               />
               <span style={{
-                fontSize: '1.25rem',
+                fontSize: isMobile ? '1.125rem' : '1.25rem',
                 fontWeight: 'bold',
                 color: '#1e293b'
               }}>
@@ -93,13 +108,14 @@ export function Home() {
             </div>
             <div style={{
               display: 'flex',
-              gap: '1.5rem'
+              gap: isMobile ? '1rem' : '1.5rem',
+              flexDirection: isMobile ? 'row' : 'row'
             }}>
               <Link to="/" style={{
                 color: '#1e293b',
                 textDecoration: 'none',
                 fontWeight: '500',
-                fontSize: '1rem'
+                fontSize: isMobile ? '0.875rem' : '1rem'
               }}>
                 Home
               </Link>
@@ -107,7 +123,7 @@ export function Home() {
                 color: '#1e293b',
                 textDecoration: 'none',
                 fontWeight: '500',
-                fontSize: '1rem'
+                fontSize: isMobile ? '0.875rem' : '1rem'
               }}>
                 About
               </Link>
@@ -115,7 +131,7 @@ export function Home() {
                 color: '#1e293b',
                 textDecoration: 'none',
                 fontWeight: '500',
-                fontSize: '1rem'
+                fontSize: isMobile ? '0.875rem' : '1rem'
               }}>
                 Contact
               </Link>
@@ -123,30 +139,30 @@ export function Home() {
           </div>
           <div style={{
             display: 'flex',
-            gap: '1rem'
+            gap: isMobile ? '0.75rem' : '1rem'
           }}>
             <Link to="/login" style={{
-              padding: '0.5rem 1.25rem',
+              padding: isMobile ? '0.5rem 1rem' : '0.5rem 1.25rem',
               backgroundColor: 'transparent',
               color: '#1e293b',
               border: '1px solid #1e293b',
               borderRadius: '0.375rem',
               cursor: 'pointer',
               fontWeight: '500',
-              fontSize: '0.875rem',
+              fontSize: isMobile ? '0.75rem' : '0.875rem',
               textDecoration: 'none'
             }}>
               Login
             </Link>
             <Link to="/signup" style={{
-              padding: '0.5rem 1.25rem',
+              padding: isMobile ? '0.5rem 1rem' : '0.5rem 1.25rem',
               backgroundColor: '#1e293b',
               color: 'white',
               border: 'none',
               borderRadius: '0.375rem',
               cursor: 'pointer',
               fontWeight: '500',
-              fontSize: '0.875rem',
+              fontSize: isMobile ? '0.75rem' : '0.875rem',
               textDecoration: 'none'
             }}>
               Sign Up
@@ -164,13 +180,13 @@ export function Home() {
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${heroImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          height: '80vh',
+          height: isMobile ? '60vh' : '80vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           color: 'white',
           textAlign: 'center',
-          padding: '0 2rem'
+          padding: isMobile ? '0 1rem' : '0 2rem'
         }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -178,7 +194,7 @@ export function Home() {
             transition={{ duration: 0.8 }}
           >
             <h1 style={{
-              fontSize: '3.5rem',
+              fontSize: isMobile ? '2.5rem' : '3.5rem',
               fontWeight: 'bold',
               marginBottom: '1.25rem',
               textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
@@ -186,7 +202,7 @@ export function Home() {
               Welcome to GamifyEd
             </h1>
             <p style={{
-              fontSize: '1.25rem',
+              fontSize: isMobile ? '1rem' : '1.25rem',
               marginBottom: '1.5rem',
               textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
             }}>
@@ -197,8 +213,8 @@ export function Home() {
               whileTap={{ scale: 0.95 }}
               onClick={handleActionClick}
               style={{
-                padding: '0.75rem 2.5rem',
-                fontSize: '1.25rem',
+                padding: isMobile ? '0.75rem 2rem' : '0.75rem 2.5rem',
+                fontSize: isMobile ? '1rem' : '1.25rem',
                 backgroundColor: '#dc2626',
                 color: 'white',
                 border: 'none',
@@ -215,7 +231,7 @@ export function Home() {
 
         {/* Interactive Carousel Section */}
         <div style={{
-          padding: '6rem 2rem',
+          padding: isMobile ? '3rem 1rem' : '6rem 2rem',
           background: 'white',
           position: 'relative'
         }}>
@@ -225,12 +241,9 @@ export function Home() {
           }}>
             <div style={{
               display: 'grid',
-              gridTemplateColumns: '1fr 1.5fr',
-              gap: '4rem',
-              alignItems: 'center',
-              '@media (max-width: 768px)': {
-                gridTemplateColumns: '1fr'
-              }
+              gridTemplateColumns: isMobile ? '1fr' : '1fr 1.5fr',
+              gap: isMobile ? '2rem' : '4rem',
+              alignItems: 'center'
             }}>
               {/* Left Column - Content */}
               <motion.div
@@ -240,11 +253,11 @@ export function Home() {
                 exit={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.5 }}
                 style={{
-                  maxWidth: '400px'
+                  maxWidth: isMobile ? '100%' : '400px'
                 }}
               >
                 <h2 style={{
-                  fontSize: '2.25rem',
+                  fontSize: isMobile ? '1.75rem' : '2.25rem',
                   color: '#1e293b',
                   fontWeight: 'bold',
                   marginBottom: '1.25rem',
@@ -253,7 +266,7 @@ export function Home() {
                   {carouselItems[currentCarousel].title}
                 </h2>
                 <p style={{
-                  fontSize: '1.1rem',
+                  fontSize: isMobile ? '1rem' : '1.1rem',
                   color: '#475569',
                   marginBottom: '1.5rem',
                   lineHeight: '1.6'
@@ -265,8 +278,8 @@ export function Home() {
                   whileTap={{ scale: 0.95 }}
                   onClick={handleActionClick}
                   style={{
-                    padding: '0.75rem 1.5rem',
-                    fontSize: '1.1rem',
+                    padding: isMobile ? '0.75rem 1.25rem' : '0.75rem 1.5rem',
+                    fontSize: isMobile ? '1rem' : '1.1rem',
                     backgroundColor: '#1e293b',
                     color: 'white',
                     border: 'none',
@@ -283,10 +296,7 @@ export function Home() {
               {/* Right Column - Carousel */}
               <div style={{
                 position: 'relative',
-                height: '500px',
-                '@media (max-width: 768px)': {
-                  height: '400px'
-                }
+                height: isMobile ? '300px' : '500px'
               }}>
                 <div style={{
                   display: 'flex',
@@ -303,21 +313,24 @@ export function Home() {
                     style={{
                       position: 'absolute',
                       left: '0',
-                      background: 'white',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'rgba(255, 255, 255, 0.9)',
                       border: 'none',
                       borderRadius: '50%',
-                      width: '3rem',
-                      height: '3rem',
+                      width: '40px',
+                      height: '40px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       cursor: 'pointer',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                      zIndex: 2
+                      zIndex: 10,
+                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
                     }}
                   >
                     ←
                   </motion.button>
+
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
@@ -325,56 +338,229 @@ export function Home() {
                     style={{
                       position: 'absolute',
                       right: '0',
-                      background: 'white',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'rgba(255, 255, 255, 0.9)',
                       border: 'none',
                       borderRadius: '50%',
-                      width: '3rem',
-                      height: '3rem',
+                      width: '40px',
+                      height: '40px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       cursor: 'pointer',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                      zIndex: 2
+                      zIndex: 10,
+                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
                     }}
                   >
                     →
                   </motion.button>
 
-                  {/* Carousel Images */}
+                  {/* Carousel Image */}
                   <AnimatePresence mode="wait">
-                    {carouselItems.map((item, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ 
-                          scale: index === currentCarousel ? 1 : 0.5,
-                          x: index === currentCarousel ? 0 : 20
-                        }}
-                        animate={{ 
-                          scale: index === currentCarousel ? 1 : 0.5,
-                          x: index === currentCarousel ? 0 : 20
-                        }}
-                        exit={{ x: -20 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        onClick={() => setCurrentCarousel(index)}
+                    <motion.div
+                      key={currentCarousel}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={{ duration: 0.5 }}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '12px',
+                        overflow: 'hidden',
+                        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)'
+                      }}
+                    >
+                      <img
+                        src={carouselItems[currentCarousel].image}
+                        alt={carouselItems[currentCarousel].title}
                         style={{
-                          flex: index === currentCarousel ? 5 : 1,
+                          width: '100%',
                           height: '100%',
-                          backgroundImage: `url(${item.image})`,
-                          backgroundSize: 'cover',
-                          backgroundPosition: 'center',
-                          borderRadius: '0.5rem',
-                          cursor: 'pointer',
-                          position: 'relative',
-                          overflow: 'hidden',
-                          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                          transition: 'all 0.3s ease',
-                          opacity: 1
+                          objectFit: 'cover'
                         }}
                       />
-                    ))}
+                    </motion.div>
                   </AnimatePresence>
                 </div>
+
+                {/* Carousel Indicators */}
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  marginTop: '1rem'
+                }}>
+                  {carouselItems.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentCarousel(index)}
+                      style={{
+                        width: '12px',
+                        height: '12px',
+                        borderRadius: '50%',
+                        border: 'none',
+                        background: index === currentCarousel ? '#1e293b' : '#cbd5e1',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Features Section */}
+        <div style={{
+          padding: isMobile ? '3rem 1rem' : '6rem 2rem',
+          background: '#f8fafc'
+        }}>
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto'
+          }}>
+            <div style={{
+              textAlign: 'center',
+              marginBottom: isMobile ? '2rem' : '4rem'
+            }}>
+              <h2 style={{
+                fontSize: isMobile ? '2rem' : '2.5rem',
+                color: '#1e293b',
+                fontWeight: 'bold',
+                marginBottom: '1rem'
+              }}>
+                Why Choose GamifyEd?
+              </h2>
+              <p style={{
+                fontSize: isMobile ? '1rem' : '1.125rem',
+                color: '#64748b',
+                maxWidth: '600px',
+                margin: '0 auto'
+              }}>
+                Experience learning like never before with our innovative platform
+              </p>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+              gap: isMobile ? '2rem' : '3rem'
+            }}>
+              {/* Feature 1 */}
+              <div style={{
+                background: 'white',
+                padding: isMobile ? '1.5rem' : '2rem',
+                borderRadius: '12px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                textAlign: 'center'
+              }}>
+                <div style={{
+                  width: '60px',
+                  height: '60px',
+                  background: '#eff6ff',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 1rem',
+                  fontSize: '1.5rem',
+                  color: '#2563eb'
+                }}>
+                  🎯
+                </div>
+                <h3 style={{
+                  fontSize: isMobile ? '1.25rem' : '1.5rem',
+                  color: '#1e293b',
+                  fontWeight: 'bold',
+                  marginBottom: '0.75rem'
+                }}>
+                  Personalized Learning
+                </h3>
+                <p style={{
+                  color: '#64748b',
+                  lineHeight: '1.6'
+                }}>
+                  Adaptive quizzes that adjust to your learning pace and style
+                </p>
+              </div>
+
+              {/* Feature 2 */}
+              <div style={{
+                background: 'white',
+                padding: isMobile ? '1.5rem' : '2rem',
+                borderRadius: '12px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                textAlign: 'center'
+              }}>
+                <div style={{
+                  width: '60px',
+                  height: '60px',
+                  background: '#f0fdf4',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 1rem',
+                  fontSize: '1.5rem',
+                  color: '#16a34a'
+                }}>
+                  📊
+                </div>
+                <h3 style={{
+                  fontSize: isMobile ? '1.25rem' : '1.5rem',
+                  color: '#1e293b',
+                  fontWeight: 'bold',
+                  marginBottom: '0.75rem'
+                }}>
+                  Progress Tracking
+                </h3>
+                <p style={{
+                  color: '#64748b',
+                  lineHeight: '1.6'
+                }}>
+                  Detailed analytics and insights to monitor your growth
+                </p>
+              </div>
+
+              {/* Feature 3 */}
+              <div style={{
+                background: 'white',
+                padding: isMobile ? '1.5rem' : '2rem',
+                borderRadius: '12px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                textAlign: 'center'
+              }}>
+                <div style={{
+                  width: '60px',
+                  height: '60px',
+                  background: '#fef3c7',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 1rem',
+                  fontSize: '1.5rem',
+                  color: '#d97706'
+                }}>
+                  🌍
+                </div>
+                <h3 style={{
+                  fontSize: isMobile ? '1.25rem' : '1.5rem',
+                  color: '#1e293b',
+                  fontWeight: 'bold',
+                  marginBottom: '0.75rem'
+                }}>
+                  Global Community
+                </h3>
+                <p style={{
+                  color: '#64748b',
+                  lineHeight: '1.6'
+                }}>
+                  Connect with learners worldwide and compete on leaderboards
+                </p>
               </div>
             </div>
           </div>
@@ -382,128 +568,69 @@ export function Home() {
 
         {/* CTA Section */}
         <div style={{
-          padding: '6rem 2rem',
-          background: '#f8fafc',
+          padding: isMobile ? '3rem 1rem' : '6rem 2rem',
+          background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
+          color: 'white',
           textAlign: 'center'
         }}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            style={{
-              maxWidth: '800px',
-              margin: '0 auto'
-            }}
-          >
+          <div style={{
+            maxWidth: '800px',
+            margin: '0 auto'
+          }}>
             <h2 style={{
-              fontSize: '2.5rem',
-              marginBottom: '1.5rem',
-              fontWeight: 'bold'
+              fontSize: isMobile ? '2rem' : '2.5rem',
+              fontWeight: 'bold',
+              marginBottom: '1rem'
             }}>
-              Ready to Begin Your Learning Journey?
+              Ready to Start Your Learning Journey?
             </h2>
             <p style={{
-              fontSize: '1.25rem',
+              fontSize: isMobile ? '1rem' : '1.125rem',
               marginBottom: '2rem',
               opacity: 0.9
             }}>
-              Join thousands of students who are enhancing their knowledge with our platform
+              Join thousands of learners who are already transforming their education experience
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleActionClick}
               style={{
-                padding: '1rem 3rem',
-                fontSize: '1.25rem',
-                backgroundColor: 'white',
-                color: '#1e293b',
+                padding: isMobile ? '0.75rem 2rem' : '1rem 2.5rem',
+                fontSize: isMobile ? '1rem' : '1.125rem',
+                backgroundColor: '#dc2626',
+                color: 'white',
                 border: 'none',
                 borderRadius: '0.5rem',
                 cursor: 'pointer',
-                fontWeight: '500',
+                fontWeight: '600',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)'
               }}
             >
-              Start Learning Now
+              Get Started Today
             </motion.button>
-          </motion.div>
+          </div>
         </div>
       </main>
 
+      {/* Footer */}
       <footer style={{
         background: '#1e293b',
         color: 'white',
-        padding: '2rem',
-        marginTop: 'auto'
+        padding: isMobile ? '2rem 1rem' : '3rem 2rem',
+        textAlign: 'center'
       }}>
         <div style={{
           maxWidth: '1200px',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-          gap: '2rem'
+          margin: '0 auto'
         }}>
-          <div>
-            <h3 style={{
-              fontSize: '1.5rem',
-              marginBottom: '1rem',
-              color: '#e2e8f0'
-            }}>
-              GamifyEd
-            </h3>
-            <p style={{
-              color: '#94a3b8',
-              lineHeight: '1.6'
-            }}>
-              Empowering students through interactive learning and knowledge assessment.
-            </p>
-          </div>
-          <div>
-            <h3 style={{
-              fontSize: '1.25rem',
-              marginBottom: '1rem',
-              color: '#e2e8f0'
-            }}>
-              Quick Links
-            </h3>
-            <ul style={{
-              listStyle: 'none',
-              padding: 0,
-              color: '#94a3b8'
-            }}>
-              <li style={{ marginBottom: '0.5rem' }}>About Us</li>
-              <li style={{ marginBottom: '0.5rem' }}>Contact</li>
-              <li style={{ marginBottom: '0.5rem' }}>Privacy Policy</li>
-              <li>Terms of Service</li>
-            </ul>
-          </div>
-          <div>
-            <h3 style={{
-              fontSize: '1.25rem',
-              marginBottom: '1rem',
-              color: '#e2e8f0'
-            }}>
-              Connect With Us
-            </h3>
-            <div style={{
-              display: 'flex',
-              gap: '1rem'
-            }}>
-              <a href="#" style={{ color: '#94a3b8' }}>Twitter</a>
-              <a href="#" style={{ color: '#94a3b8' }}>LinkedIn</a>
-              <a href="#" style={{ color: '#94a3b8' }}>Instagram</a>
-            </div>
-          </div>
-        </div>
-        <div style={{
-          textAlign: 'center',
-          marginTop: '2rem',
-          paddingTop: '2rem',
-          borderTop: '1px solid #334155',
-          color: '#94a3b8'
-        }}>
-          © 2025 GamifyEd. All rights reserved.
+          <p style={{
+            margin: 0,
+            opacity: 0.8,
+            fontSize: isMobile ? '0.875rem' : '1rem'
+          }}>
+            © 2024 GamifyEd. All rights reserved.
+          </p>
         </div>
       </footer>
     </div>
